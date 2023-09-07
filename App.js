@@ -8,49 +8,56 @@ import {
   TextInput,
   FlatList
 } from "react-native";
+import Header from "./components/Header";
+import TodoItem from "./components/TodoItem";
 
 export default function App() {
+  const [todos, setTodos] = useState("");
   const [person, setPerson] = useState([
     {
-      name: "abebe",
+      name: "Welcome to the Native",
       key: "1"
     },
     {
-      name: "kebede",
+      name: "Helow the net gangs of ethiopia",
       key: "2"
     },
     {
-      name: "aster",
+      name: "React native is the miracle fo coding",
       key: "3"
     },
     {
-      name: "belete",
+      name: "you must learn how can to type",
       key: "4"
     },
     {
-      name: "dubale",
+      name: "there are other ways if you want",
       key: "5"
     },
     {
-      name: "alemu",
+      name: "start now and go fast and forward",
       key: "6"
     }
   ]);
-  console.log(person);
+  const deleteItems = (value) => {
+    setPerson((prev) => {
+      return prev.filter((todo) => todo.key != value);
+    });
+  };
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={2}
-        data={person}
-        renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
-      />
-      {/* <ScrollView>
-        {person.map((man) => (
-          <View key={man.key}>
-            <Text style={styles.item}>{man.name}</Text>
-          </View>
-        ))}
-      </ScrollView> */}
+      <Header />
+      <View style={styles.content}>
+        {/* to form */}
+        <View style={styles.list}>
+          <FlatList
+            data={person}
+            renderItem={({ item }) => (
+              <TodoItem item={item} pressHandler={deleteItems} />
+            )}
+          />
+        </View>
+      </View>
     </View>
   );
 }
@@ -62,12 +69,10 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     paddingHorizontal: 20
   },
-  item: {
-    marginTop: 25,
-    padding: 30,
-    backgroundColor: "pink",
-    fontSize: 24,
-    marginHorizontal:10,
-    marginTop:24,
+  content: {
+    padding: 40
+  },
+  list: {
+    marginTop: 20
   }
 });
