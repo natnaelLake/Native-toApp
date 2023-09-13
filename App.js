@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import Header from "./components/Header";
 import TodoItem from "./components/TodoItem";
+import AddTodo from "./components/AddTodo";
+import Sandbox from "./components/sandbox";
 
 export default function App() {
   const [todos, setTodos] = useState("");
@@ -44,11 +46,17 @@ export default function App() {
       return prev.filter((todo) => todo.key != value);
     });
   };
+
+  const submitHandler = (data) => {
+    setPerson((prev) => {
+      return [{ name: data, key: Math.random().toString() }, ...prev];
+    });
+  };
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
-        {/* to form */}
+        <AddTodo submitHandler={submitHandler}/>
         <View style={styles.list}>
           <FlatList
             data={person}
@@ -70,9 +78,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20
   },
   content: {
-    padding: 40
+    padding: 40,
+    flex:1
   },
   list: {
-    marginTop: 20
+    marginTop: 20,
+    flex:1,
   }
 });
